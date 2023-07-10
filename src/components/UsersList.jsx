@@ -6,45 +6,29 @@ import { BsCaretDown } from "react-icons/bs";
 import { useSelector } from "react-redux";
 
 const UsersList = () => {
-  const users = useSelector((state) => state.users);
-  console.log(users);
+  const { data } = useSelector((state) => state.users);
+  console.log(data);
+
+  if (!data) return;
+
+  const renderedList = data.map((user) => {
+    return (
+      <Panel
+        key={user.id}
+        className='w-1/2 flex justify-between items-center'
+      >
+        <div className='flex items-center justify-center gap-2'>
+          <TiDelete />
+          {user.name}
+        </div>
+        <BsCaretDown />
+      </Panel>
+    );
+  });
+
   return (
-    <div className='flex flex-col gap-3 w-full'>
-      <Panel className='w-96 flex justify-between items-center'>
-        <div className='flex items-center justify-center gap-2'>
-          <TiDelete />
-          Username
-        </div>
-        <BsCaretDown />
-      </Panel>
-      <Panel className='w-96 flex justify-between items-center'>
-        <div className='flex items-center justify-center gap-2'>
-          <TiDelete />
-          Username
-        </div>
-        <BsCaretDown />
-      </Panel>
-      <Panel className='w-96 flex justify-between items-center'>
-        <div className='flex items-center justify-center gap-2'>
-          <TiDelete />
-          Username
-        </div>
-        <BsCaretDown />
-      </Panel>
-      <Panel className='w-96 flex justify-between items-center'>
-        <div className='flex items-center justify-center gap-2'>
-          <TiDelete />
-          Username
-        </div>
-        <BsCaretDown />
-      </Panel>
-      <Panel className='w-96 flex justify-between items-center'>
-        <div className='flex items-center justify-center gap-2'>
-          <TiDelete />
-          Username
-        </div>
-        <BsCaretDown />
-      </Panel>
+    <div className='flex flex-col gap-3 w-full justify-center items-center'>
+      {renderedList}
     </div>
   );
 };

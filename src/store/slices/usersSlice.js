@@ -8,14 +8,11 @@ export const usersSlice = createSlice({
     isLoading: false,
     error: null,
   },
-  reducers: {
-    addUser(state, action) {
-      state.data.push(action.payload);
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder.addCase(fetchUsers.pending, (state, action) => {
       state.isLoading = true;
+      state.error = null;
     });
     builder.addCase(
       fetchUsers.fulfilled,
@@ -28,11 +25,10 @@ export const usersSlice = createSlice({
       fetchUsers.rejected,
       (state, action) => {
         state.isLoading = false;
-        state.error = action.payload;
+        state.error = action.error;
       }
     );
   },
 });
 
 export const userReducer = usersSlice.reducer;
-export const { addUser } = usersSlice.actions;
