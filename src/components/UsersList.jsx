@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Panel from "./Panel";
 import Button from "./Button";
 import { TiDelete } from "react-icons/ti";
@@ -7,22 +7,58 @@ import { useDispatch, useSelector } from "react-redux";
 import Skeleton from "./skeleton";
 import { fetchUsers, addUser } from "../store";
 
-const UsersList = () => {
+const useThunk = (action) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(null);
   const dispatch = useDispatch();
-  const { data, isLoading, error } = useSelector(
-    (state) => state.users
-  );
+  const doFetch = () => {
+    setIsLoading(true);
+    setIsError(null);
+    dispatch(action())
+      .unwrap()
+      .then(() => {
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setIsLoading("problem loading users", err);
+      });
+  };
+
+  return [doFetch, isLoading, isError];
+};
+
+const UsersList = () => {
+  const [isAddingUser, setIsAddingUser] = useState(false);
+  const [addUserError, setAddUserError] = useState(null);
+  const dispatch = useDispatch();
+  const { data } = useSelector((state) => state.users);
+
+  const [
+    startFetchingUsers,
+    isLoadingUsers,
+    isLoadingUsersError,
+  ] = useThunk(fetchUsers);
+  const [
+    startCreateUser,
+    isCreatingUser,
+    isCreatingUserError,
+  ] = useThunk(addUser);
 
   useEffect(() => {
-    dispatch(fetchUsers());
+    startFetchingUsers();
   }, []);
 
   const handleAddUser = async () => {
-    dispatch(addUser());
+    startCreateUser();
   };
 
-  if (isLoading && !data.length)
+  if (isLoadingUsers)
     return <Skeleton className={"h-10 w-full"} times={3} />;
+
+  if (isLoadingUsersError) {
+    return <div>Error...</div>;
+  }
 
   const renderedList = data.map((user) => {
     return (
@@ -44,17 +80,20 @@ const UsersList = () => {
       <div className='w-full flex justify-between items-center my-5 '>
         <span className='font-bold'>List of Users</span>{" "}
         <Button
+          className={
+            isCreatingUser
+              ? "focus:outline-none disabled:opacity-50"
+              : "hover:bg-blue-700"
+          }
           onClick={handleAddUser}
           primary
-          className='hover:bg-blue-600'
+          isLoading={isCreatingUser}
         >
-          +Add User
+          {isCreatingUser ? "Loading..." : "+Add User"}
         </Button>
       </div>
       {renderedList}
-      {isLoading && (
-        <Skeleton className={"h-10 w-full"} times={1} />
-      )}
+      {isCreatingUserError && "Error creating user"}
     </div>
   );
 };

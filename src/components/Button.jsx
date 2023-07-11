@@ -9,6 +9,7 @@ function Button({
   danger,
   outline,
   rounded,
+  isLoading,
   ...rest
 }) {
   const classes = className(
@@ -31,7 +32,11 @@ function Button({
   );
 
   return (
-    <button {...rest} className={classes}>
+    <button
+      disabled={isLoading}
+      {...rest}
+      className={classes}
+    >
       {children}
     </button>
   );
