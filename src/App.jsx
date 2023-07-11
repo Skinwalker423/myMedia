@@ -1,6 +1,6 @@
 import UsersList from "./components/UsersList";
 import "./App.css";
-import { fetchUsers } from "./store";
+import { fetchUsers, addUser } from "./store";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Panel from "./components/Panel";
@@ -13,18 +13,26 @@ function App() {
     (state) => state.users
   );
 
+  const handleAddUser = async () => {
+    dispatch(addUser());
+  };
+
   if (error) return <Panel>Error: </Panel>;
 
   console.log(data);
 
   return (
     <div className='container mx-auto'>
-      <Panel className='flex justify-between items-center my-5 '>
-        <span>Users</span>{" "}
-        <Button primary className='hover:bg-blue-600'>
+      <div className='flex justify-between items-center my-5 '>
+        <span>List of Users</span>{" "}
+        <Button
+          onClick={handleAddUser}
+          primary
+          className='hover:bg-blue-600'
+        >
           +Add User
         </Button>
-      </Panel>
+      </div>
       <UsersList />
     </div>
   );

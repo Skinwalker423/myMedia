@@ -3,6 +3,18 @@
     {
       "id": 1,
       "name": "Myra"
+    },
+    {
+      "name": "Desiree",
+      "id": 2
+    },
+    {
+      "name": "Matilda",
+      "id": 3
+    },
+    {
+      "name": "Jamel",
+      "id": 4
     }
   ],
   "albums": [],
