@@ -5,7 +5,7 @@ import { TiDelete } from "react-icons/ti";
 import { BsCaretDown } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import Skeleton from "./skeleton";
-import { fetchUsers } from "../store";
+import { fetchUsers, addUser } from "../store";
 
 const UsersList = () => {
   const dispatch = useDispatch();
@@ -17,10 +17,11 @@ const UsersList = () => {
     dispatch(fetchUsers());
   }, []);
 
-  console.log(isLoading);
-  console.log(data);
+  const handleAddUser = async () => {
+    dispatch(addUser());
+  };
 
-  if (isLoading)
+  if (isLoading && !data.length)
     return <Skeleton className={"h-10 w-full"} times={3} />;
 
   const renderedList = data.map((user) => {
@@ -40,7 +41,20 @@ const UsersList = () => {
 
   return (
     <div className='flex flex-col gap-3 w-full justify-center items-center'>
+      <div className='w-full flex justify-between items-center my-5 '>
+        <span className='font-bold'>List of Users</span>{" "}
+        <Button
+          onClick={handleAddUser}
+          primary
+          className='hover:bg-blue-600'
+        >
+          +Add User
+        </Button>
+      </div>
       {renderedList}
+      {isLoading && (
+        <Skeleton className={"h-10 w-full"} times={1} />
+      )}
     </div>
   );
 };
