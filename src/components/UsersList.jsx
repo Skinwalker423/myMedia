@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Panel from "./Panel";
 import Button from "./Button";
 import { TiDelete } from "react-icons/ti";
 import { BsCaretDown } from "react-icons/bs";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Skeleton from "./skeleton";
 import { fetchUsers, addUser } from "../store";
 import useThunk from "../hooks/useThunk";
