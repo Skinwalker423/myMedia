@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Panel from "./components/Panel";
 import Button from "./components/Button";
+import Skeleton from "./components/skeleton";
 
 function App() {
   const dispatch = useDispatch();
@@ -12,12 +13,9 @@ function App() {
     (state) => state.users
   );
 
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, []);
-
-  if (isLoading) return <Panel>Loading...</Panel>;
   if (error) return <Panel>Error: </Panel>;
+
+  console.log(data);
 
   return (
     <div className='container mx-auto'>
@@ -27,7 +25,7 @@ function App() {
           +Add User
         </Button>
       </Panel>
-      {data.length > 0 && <UsersList />}
+      <UsersList />
     </div>
   );
 }
