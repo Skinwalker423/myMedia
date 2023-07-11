@@ -12,6 +12,9 @@ export default {
         shimmer: "shimmer 1.5s infinite",
       },
     },
+    minWidth: {
+      "2xl": "120px",
+    },
   },
   plugins: [],
 };

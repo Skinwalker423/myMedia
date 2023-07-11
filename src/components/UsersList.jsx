@@ -54,14 +54,10 @@ const UsersList = () => {
 
   return (
     <div className='flex flex-col gap-3 w-full justify-center items-center'>
-      <div className='w-full flex justify-between items-center my-5 '>
+      <div className='w-full flex justify-between items-center my-5'>
         <span className='font-bold'>List of Users</span>{" "}
         <Button
-          className={
-            isCreatingUser
-              ? "focus:outline-none disabled:opacity-50"
-              : "hover:bg-blue-700"
-          }
+          className='min-w-2xl'
           onClick={handleAddUser}
           primary
           isLoading={isCreatingUser}
