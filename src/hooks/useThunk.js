@@ -1,13 +1,14 @@
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 const useThunk = (action) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(null);
+  const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  const doFetch = () => {
+
+  const runThunk = useCallback(() => {
     setIsLoading(true);
-    setIsError(null);
+    setError(null);
     dispatch(action())
       .unwrap()
       .then(() => {
@@ -15,10 +16,10 @@ const useThunk = (action) => {
       })
       .catch((err) => {
         setIsLoading(false);
-        setIsLoading("problem loading users", err);
+        setError("problem loading users", err);
       });
-  };
+  }, [dispatch, action]);
 
-  return [doFetch, isLoading, isError];
+  return [runThunk, isLoading, error];
 };
 export default useThunk;
