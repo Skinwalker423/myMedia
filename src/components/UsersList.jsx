@@ -5,7 +5,7 @@ import { TiDelete } from "react-icons/ti";
 import { BsCaretDown } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import Skeleton from "./skeleton";
-import { fetchUsers, addUser } from "../store";
+import { fetchUsers, addUser, deleteUser } from "../store";
 import useThunk from "../hooks/useThunk";
 
 const UsersList = () => {
@@ -22,12 +22,19 @@ const UsersList = () => {
     isCreatingUserError,
   ] = useThunk(addUser);
 
+  const [startDeleteUser] = useThunk(deleteUser);
+
   useEffect(() => {
     startFetchingUsers();
   }, []);
 
   const handleAddUser = async () => {
     startCreateUser();
+  };
+
+  const handleDelete = (id) => {
+    console.log("deleting user id", id);
+    startDeleteUser(id);
   };
 
   let content;
@@ -46,7 +53,10 @@ const UsersList = () => {
           className='w-1/2 flex justify-between items-center'
         >
           <div className='flex items-center justify-center gap-2'>
-            <TiDelete />
+            <TiDelete
+              onClick={() => handleDelete(user.id)}
+              className='text-2xl text-red-600'
+            />
             {user.name}
           </div>
           <BsCaretDown />
@@ -68,7 +78,7 @@ const UsersList = () => {
           +Add User
         </Button>
       </div>
-      {content}
+      {content && content}
       {isCreatingUser && (
         <Skeleton className={"h-10 w-full"} times={1} />
       )}
