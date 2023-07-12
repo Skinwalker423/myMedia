@@ -15,8 +15,6 @@ function App() {
 
   if (error) return <Panel>Error: </Panel>;
 
-  console.log(data);
-
   return (
     <div className='container mx-auto'>
       <UsersList />

@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
-import Panel from "./Panel";
 import Button from "./Button";
-import { TiDelete } from "react-icons/ti";
-import { BsCaretDown } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import Skeleton from "./skeleton";
-import { fetchUsers, addUser, deleteUser } from "../store";
+import { fetchUsers, addUser } from "../store";
 import useThunk from "../hooks/useThunk";
+import UserListItem from "./UserListItem";
 
 const UsersList = () => {
   const { data } = useSelector((state) => state.users);
@@ -22,19 +20,12 @@ const UsersList = () => {
     isCreatingUserError,
   ] = useThunk(addUser);
 
-  const [startDeleteUser] = useThunk(deleteUser);
-
   useEffect(() => {
     startFetchingUsers();
   }, []);
 
   const handleAddUser = async () => {
     startCreateUser();
-  };
-
-  const handleDelete = (id) => {
-    console.log("deleting user id", id);
-    startDeleteUser(id);
   };
 
   let content;
@@ -47,21 +38,7 @@ const UsersList = () => {
     );
   } else {
     content = data.map((user) => {
-      return (
-        <Panel
-          key={user.id}
-          className='w-1/2 flex justify-between items-center'
-        >
-          <div className='flex items-center justify-center gap-2'>
-            <TiDelete
-              onClick={() => handleDelete(user.id)}
-              className='text-2xl text-red-600'
-            />
-            {user.name}
-          </div>
-          <BsCaretDown />
-        </Panel>
-      );
+      return <UserListItem key={user.id} user={user} />;
     });
   }
 
