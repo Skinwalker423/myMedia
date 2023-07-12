@@ -30,27 +30,30 @@ const UsersList = () => {
     startCreateUser();
   };
 
-  if (isLoadingUsers)
-    return <Skeleton className={"h-10 w-full"} times={3} />;
+  let content;
 
   if (isLoadingUsersError) {
-    return <div>Error...</div>;
-  }
-
-  const renderedList = data.map((user) => {
-    return (
-      <Panel
-        key={user.id}
-        className='w-1/2 flex justify-between items-center'
-      >
-        <div className='flex items-center justify-center gap-2'>
-          <TiDelete />
-          {user.name}
-        </div>
-        <BsCaretDown />
-      </Panel>
+    content = <div>Error...</div>;
+  } else if (isLoadingUsers) {
+    content = (
+      <Skeleton className={"h-10 w-full"} times={3} />
     );
-  });
+  } else {
+    content = data.map((user) => {
+      return (
+        <Panel
+          key={user.id}
+          className='w-1/2 flex justify-between items-center'
+        >
+          <div className='flex items-center justify-center gap-2'>
+            <TiDelete />
+            {user.name}
+          </div>
+          <BsCaretDown />
+        </Panel>
+      );
+    });
+  }
 
   return (
     <div className='flex flex-col gap-3 w-full justify-center items-center'>
@@ -60,13 +63,15 @@ const UsersList = () => {
           className='min-w-2xl'
           onClick={handleAddUser}
           primary
-          isLoading={isCreatingUser}
+          isLoading={isCreatingUser || isLoadingUsers}
         >
-          {isCreatingUser ? "Loading..." : "+Add User"}
+          +Add User
         </Button>
       </div>
-      {renderedList}
-      {isCreatingUserError && "Error creating user"}
+      {content}
+      {isCreatingUser && (
+        <Skeleton className={"h-10 w-full"} times={1} />
+      )}
     </div>
   );
 };
