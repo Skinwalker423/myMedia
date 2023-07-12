@@ -9,6 +9,12 @@
       "id": 3
     }
   ],
-  "albums": [],
+  "albums": [
+    {
+      "title": "Climbing",
+      "userId": 2,
+      "id": 1
+    }
+  ],
   "photos": []
 }
