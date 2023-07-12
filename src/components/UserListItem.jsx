@@ -4,6 +4,7 @@ import { BsCaretDown } from "react-icons/bs";
 import useThunk from "../hooks/useThunk";
 import { deleteUser } from "../store";
 import { GoSync } from "react-icons/go";
+import Button from "./Button";
 
 const UserListItem = ({ user }) => {
   const { id, name } = user;
@@ -16,15 +17,14 @@ const UserListItem = ({ user }) => {
   };
   return (
     <Panel className='w-1/2 flex justify-between items-center'>
-      <div className='flex items-center justify-center gap-2'>
-        {isDeleting ? (
-          <GoSync className='animate-spin text-2xl' />
-        ) : (
-          <TiDelete
-            onClick={() => handleDelete(id)}
-            className='text-2xl text-red-600'
-          />
-        )}
+      <div className='flex items-center justify-center gap-5'>
+        <Button
+          isLoading={isDeleting}
+          onClick={() => handleDelete(id)}
+        >
+          <TiDelete className='text-2xl text-red-600' />
+        </Button>
+        {isDeletingError && <div>Error deleting user</div>}
         {name}
       </div>
       <BsCaretDown />
