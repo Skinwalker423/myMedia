@@ -7,12 +7,24 @@ import { GoSync } from "react-icons/go";
 import Button from "./Button";
 import { useSelector } from "react-redux";
 import Skeleton from "./skeleton";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import ExpandablePanel from "./ExpandablePanel";
+import axios from "axios";
+import AlbumsList from "./AlbumsList";
 
 const UserListItem = ({ user }) => {
   const { id, name } = user;
+  const dipatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false);
+  const [userAlbums, setUserAlbums] = useState([]);
 
-  const albums = useSelector((state) => state.albums);
-  console.log(albums);
+  const handleFetchAlbums = async (userId) => {
+    const response = await axios.get(
+      `http://localhost:3004/albums?userId=${userId}`
+    );
+    setUserAlbums(response.data);
+  };
 
   const [startDeleteUser, isDeleting, isDeletingError] =
     useThunk(deleteUser);
@@ -29,49 +41,37 @@ const UserListItem = ({ user }) => {
   };
   const handleShowAlbums = (userId) => {
     console.log("showing album for user id", userId);
+    if (isOpen) return;
     startFetchingAlbums(userId);
   };
 
-  let content;
-
   if (isFetchingAlbumsError) {
-    content = <div>Error...</div>;
-  } else {
-    content = albums.data
-      .filter((album) => album.userId === id)
-      .map((album) => {
-        return (
-          <div key={album.id} className='flex'>
-            {album.title}
-          </div>
-        );
-      });
+    return <div>Error...</div>;
   }
 
-  return (
-    <Panel className='w-1/2 flex flex-col justify-between items-center gap-3'>
-      <div className='w-full flex justify-between items-center'>
-        <div className='flex items-center justify-center gap-5'>
-          <Button
-            isLoading={isDeleting}
-            onClick={() => handleDelete(id)}
-          >
-            <TiDelete className='text-2xl text-red-600' />
-          </Button>
-          {isDeletingError && (
-            <div>Error deleting user</div>
-          )}
-          {name}
-        </div>
+  const header = (
+    <>
+      <div className='flex items-center justify-center gap-5'>
         <Button
-          isLoading={isFetchingAlbums}
-          onClick={() => handleShowAlbums(id)}
+          isLoading={isDeleting}
+          onClick={() => handleDelete(id)}
         >
-          <BsCaretDown />
+          <TiDelete className='text-2xl text-red-600' />
         </Button>
+        {isDeletingError && <div>Error deleting user</div>}
+        {name}
       </div>
-      {content?.length > 0 && <Panel>{content}</Panel>}
-    </Panel>
+    </>
+  );
+
+  return (
+    <ExpandablePanel
+      userId={id}
+      handleFetchAlbums={handleFetchAlbums}
+      header={header}
+    >
+      <AlbumsList user={user} albumsList={userAlbums} />
+    </ExpandablePanel>
   );
 };
 
