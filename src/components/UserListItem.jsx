@@ -1,12 +1,8 @@
-import Panel from "./Panel";
 import { TiDelete } from "react-icons/ti";
-import { BsCaretDown } from "react-icons/bs";
 import useThunk from "../hooks/useThunk";
 import { deleteUser, fetchAlbums } from "../store";
-import { GoSync } from "react-icons/go";
 import Button from "./Button";
-import { useSelector } from "react-redux";
-import Skeleton from "./skeleton";
+
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import ExpandablePanel from "./ExpandablePanel";

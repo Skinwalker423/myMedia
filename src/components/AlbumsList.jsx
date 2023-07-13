@@ -1,9 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import Button from "./Button";
+import { useGetAlbumsByUserQuery } from "../store/apis/albumsApi";
 
 const AlbumsList = ({ user, albumsList }) => {
-  const renderedList = albumsList.map((album) => {
+  const { data, error, isLoading } =
+    useGetAlbumsByUserQuery(user.id);
+
+  console.log("data from new rtk query", data);
+
+  const renderedList = data?.map((album) => {
     return (
       <div key={album.id} className='flex py-3'>
         {album.title}
@@ -17,7 +23,8 @@ const AlbumsList = ({ user, albumsList }) => {
         <div>{user.name}</div>
         <Button>Add Album</Button>
       </div>
-      {renderedList}
+      {isLoading ? "loading..." : renderedList}
+      {error && "Problem fetching albums"}
     </div>
   );
 };
