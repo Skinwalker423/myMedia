@@ -17,6 +17,7 @@ function ExpandablePanel({
   const handleExpand = async () => {
     setExpanded((expanded) => !expanded);
     if (expanded) return;
+    if (!handleFetchAlbums) return;
     await handleFetchAlbums(userId);
   };
 

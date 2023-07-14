@@ -10,16 +10,15 @@ import Skeleton from "./skeleton";
 import ExpandablePanel from "./ExpandablePanel";
 
 const AlbumsList = ({ user }) => {
-  const randomTitle = faker.company.catchPhrase();
-
-  const album = {
-    title: randomTitle,
-    userId: user.id,
-  };
-  const { data, error, isLoading } =
+  const { data, error, isLoading, refetch } =
     useGetAlbumsByUserQuery(user.id);
 
-  const handleAddAlbum = () => {};
+  const [addAlbum, results] = useAddAlbumToUserMutation();
+
+  const handleAddAlbum = () => {
+    addAlbum(user.id);
+    refetch();
+  };
 
   console.log("data from new rtk query", data);
 

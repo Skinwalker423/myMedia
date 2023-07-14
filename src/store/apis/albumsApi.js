@@ -2,21 +2,25 @@ import {
   createApi,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
+import { faker } from "@faker-js/faker";
 
 export const albumsApi = createApi({
   reducerPath: "albumsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3004/",
+    baseUrl: "http://localhost:3004",
   }),
   endpoints: (builder) => ({
     getAlbumsByUser: builder.query({
-      query: (userId) => `albums?userId=${userId}`,
+      query: (userId) => `/albums?userId=${userId}`,
     }),
     addAlbumToUser: builder.mutation({
-      query: (album) => ({
-        url: "albums",
+      query: (userId) => ({
+        url: "/albums",
         method: "POST",
-        body: album,
+        body: {
+          title: faker.company.catchPhrase(),
+          userId: userId,
+        },
       }),
     }),
     removeAlbumById: builder.mutation({
