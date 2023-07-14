@@ -43,7 +43,13 @@ const AlbumsList = ({ user }) => {
     <div className='flex flex-col p-3'>
       <div className='flex justify-between items-center mb-5'>
         <div>Albums for {user.name}</div>
-        <Button onClick={handleAddAlbum}>Add Album</Button>
+        <Button
+          className='min-w-2xl'
+          isLoading={results.isLoading}
+          onClick={handleAddAlbum}
+        >
+          Add Album
+        </Button>
       </div>
       {isLoading ? (
         <Skeleton className={"h-10 w-full"} times={2} />
