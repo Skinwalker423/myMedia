@@ -12,7 +12,23 @@ export const albumsApi = createApi({
     getAlbumsByUser: builder.query({
       query: (userId) => `albums?userId=${userId}`,
     }),
+    addAlbumToUser: builder.mutation({
+      query: (album) => ({
+        url: "albums/",
+        method: "PUT",
+        body: album,
+      }),
+    }),
+    removeAlbumById: builder.mutation({
+      query: (albumId) => ({
+        url: `albums/${albumId}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
-export const { useGetAlbumsByUserQuery } = albumsApi;
+export const {
+  useGetAlbumsByUserQuery,
+  useAddAlbumToUserMutation,
+} = albumsApi;
