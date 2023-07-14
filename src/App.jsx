@@ -4,6 +4,7 @@ import { fetchUsers, addUser } from "./store";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Panel from "./components/Panel";
+import { store } from "./store";
 
 function App() {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ function App() {
     (state) => state.albums
   );
 
-  console.log(data);
+  console.log(store.getState());
 
   if (error) return <Panel>Error: </Panel>;
 

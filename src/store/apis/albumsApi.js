@@ -7,21 +7,24 @@ import { faker } from "@faker-js/faker";
 export const albumsApi = createApi({
   reducerPath: "albumsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3004",
+    baseUrl: "http://localhost:3004/",
   }),
   endpoints: (builder) => ({
     getAlbumsByUser: builder.query({
-      query: (userId) => `/albums?userId=${userId}`,
+      query: (userId) => `albums?userId=${userId}`,
+      providesTags: (result, error, userId) => [
+        { type: "Album", id: userId },
+      ],
     }),
     addAlbumToUser: builder.mutation({
-      query: (userId) => ({
-        url: "/albums",
+      query: (album) => ({
+        url: "albums",
         method: "POST",
-        body: {
-          title: faker.company.catchPhrase(),
-          userId: userId,
-        },
+        body: album,
       }),
+      invalidatesTags: (result, error, album) => [
+        { type: "Album", id: album.userId },
+      ],
     }),
     removeAlbumById: builder.mutation({
       query: (albumId) => ({
