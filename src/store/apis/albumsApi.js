@@ -14,8 +14,8 @@ export const albumsApi = createApi({
     }),
     addAlbumToUser: builder.mutation({
       query: (album) => ({
-        url: "albums/",
-        method: "PUT",
+        url: "albums",
+        method: "POST",
         body: album,
       }),
     }),
@@ -31,4 +31,5 @@ export const albumsApi = createApi({
 export const {
   useGetAlbumsByUserQuery,
   useAddAlbumToUserMutation,
+  useRemoveAlbumByIdMutation,
 } = albumsApi;

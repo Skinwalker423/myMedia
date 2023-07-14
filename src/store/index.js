@@ -6,6 +6,7 @@ import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import {
   useGetAlbumsByUserQuery,
   useAddAlbumToUserMutation,
+  useRemoveAlbumByIdMutation,
 } from "./apis/albumsApi";
 
 export const store = configureStore({
@@ -27,4 +28,5 @@ export * from "./thunks/fetchAlbums";
 export {
   useAddAlbumToUserMutation,
   useGetAlbumsByUserQuery,
+  useRemoveAlbumByIdMutation,
 };
