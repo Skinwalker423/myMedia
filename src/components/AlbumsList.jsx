@@ -8,6 +8,7 @@ import {
 import { faker } from "@faker-js/faker";
 import Skeleton from "./skeleton";
 import ExpandablePanel from "./ExpandablePanel";
+import AlbumsListItem from "./AlbumsListItem";
 
 const AlbumsList = ({ user }) => {
   const { data, error, isLoading } =
@@ -27,16 +28,7 @@ const AlbumsList = ({ user }) => {
   console.log("data from new rtk query", data);
 
   const renderedList = data?.map((album) => {
-    const header = (
-      <div className='flex justify-between items-center'>
-        <div>{album.title}</div>
-      </div>
-    );
-    return (
-      <ExpandablePanel header={header} key={album.id}>
-        List of photos
-      </ExpandablePanel>
-    );
+    return <AlbumsListItem key={album.id} album={album} />;
   });
 
   return (
@@ -56,6 +48,7 @@ const AlbumsList = ({ user }) => {
       ) : (
         renderedList
       )}
+
       {error && "Problem fetching albums"}
     </div>
   );
