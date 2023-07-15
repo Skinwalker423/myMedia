@@ -5,7 +5,7 @@ import { GoTrash } from "react-icons/go";
 import { useRemoveAlbumByIdMutation } from "../store";
 
 const AlbumsListItem = ({ album }) => {
-  const [removeAlbum, result] =
+  const [removeAlbum, results] =
     useRemoveAlbumByIdMutation();
 
   const handleRemoveAlbum = (album) => {
@@ -14,7 +14,10 @@ const AlbumsListItem = ({ album }) => {
   };
   const header = (
     <div className='flex justify-between items-center gap-3'>
-      <Button onClick={() => handleRemoveAlbum(album)}>
+      <Button
+        isLoading={results.isLoading}
+        onClick={() => handleRemoveAlbum(album)}
+      >
         <GoTrash />
       </Button>
       <div>{album.title}</div>
