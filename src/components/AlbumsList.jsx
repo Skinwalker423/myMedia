@@ -11,7 +11,7 @@ import ExpandablePanel from "./ExpandablePanel";
 import AlbumsListItem from "./AlbumsListItem";
 
 const AlbumsList = ({ user }) => {
-  const { data, error, isLoading } =
+  const { data, error, isLoading, isFetching } =
     useGetAlbumsByUserQuery(user.id);
 
   const [addAlbum, results] = useAddAlbumToUserMutation();
@@ -25,8 +25,6 @@ const AlbumsList = ({ user }) => {
     addAlbum(album);
   };
 
-  console.log("data from new rtk query", data);
-
   const renderedList = data?.map((album) => {
     return <AlbumsListItem key={album.id} album={album} />;
   });
@@ -37,13 +35,13 @@ const AlbumsList = ({ user }) => {
         <div>Albums for {user.name}</div>
         <Button
           className='min-w-2xl'
-          isLoading={results.isLoading}
+          isLoading={results.isLoading || isFetching}
           onClick={handleAddAlbum}
         >
           Add Album
         </Button>
       </div>
-      {isLoading ? (
+      {isFetching ? (
         <Skeleton className={"h-10 w-full"} times={2} />
       ) : (
         renderedList

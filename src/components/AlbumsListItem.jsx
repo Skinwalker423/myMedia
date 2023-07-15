@@ -8,7 +8,7 @@ const AlbumsListItem = ({ album }) => {
   const [removeAlbum, results] =
     useRemoveAlbumByIdMutation();
 
-  const handleRemoveAlbum = (album) => {
+  const handleRemoveAlbum = () => {
     console.log("removing album id", album.id);
     removeAlbum(album);
   };
@@ -16,7 +16,7 @@ const AlbumsListItem = ({ album }) => {
     <div className='flex justify-between items-center gap-3'>
       <Button
         isLoading={results.isLoading}
-        onClick={() => handleRemoveAlbum(album)}
+        onClick={handleRemoveAlbum}
       >
         <GoTrash />
       </Button>
