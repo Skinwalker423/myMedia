@@ -8,6 +8,7 @@ import {
   useAddAlbumToUserMutation,
   useRemoveAlbumByIdMutation,
 } from "./apis/albumsApi";
+import { useGetPhotosByAlbumIdQuery } from "./apis/photosApi";
 
 export const store = configureStore({
   reducer: {
@@ -30,3 +31,5 @@ export {
   useGetAlbumsByUserQuery,
   useRemoveAlbumByIdMutation,
 };
+
+export { useGetPhotosByAlbumIdQuery };

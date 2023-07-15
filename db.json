@@ -120,5 +120,11 @@
       "id": 29
     }
   ],
-  "photos": []
+  "photos": [
+    {
+      "id": 1,
+      "url": "/vite.svg",
+      "albumId": 1
+    }
+  ]
 }
