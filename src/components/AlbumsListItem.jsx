@@ -1,10 +1,17 @@
 import React from "react";
 import ExpandablePanel from "./ExpandablePanel";
+import Button from "./Button";
+import { GoTrash } from "react-icons/go";
 
 const AlbumsListItem = ({ album }) => {
-  console.log(album);
+  const handleRemoveAlbum = (albumId) => {
+    console.log("removing album id", albumId);
+  };
   const header = (
-    <div className='flex justify-between items-center'>
+    <div className='flex justify-between items-center gap-3'>
+      <Button onClick={handleRemoveAlbum}>
+        <GoTrash />
+      </Button>
       <div>{album.title}</div>
     </div>
   );
