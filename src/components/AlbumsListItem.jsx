@@ -2,14 +2,19 @@ import React from "react";
 import ExpandablePanel from "./ExpandablePanel";
 import Button from "./Button";
 import { GoTrash } from "react-icons/go";
+import { useRemoveAlbumByIdMutation } from "../store";
 
 const AlbumsListItem = ({ album }) => {
-  const handleRemoveAlbum = (albumId) => {
-    console.log("removing album id", albumId);
+  const [removeAlbum, result] =
+    useRemoveAlbumByIdMutation();
+
+  const handleRemoveAlbum = (album) => {
+    console.log("removing album id", album.id);
+    removeAlbum(album);
   };
   const header = (
     <div className='flex justify-between items-center gap-3'>
-      <Button onClick={handleRemoveAlbum}>
+      <Button onClick={() => handleRemoveAlbum(album)}>
         <GoTrash />
       </Button>
       <div>{album.title}</div>
