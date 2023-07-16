@@ -10,7 +10,14 @@ export const photosApi = createApi({
   }),
   endpoints: (builder) => ({
     getPhotosByAlbumId: builder.query({
-      query: (album) => `photos?albumId=${album.id}`,
+      query: (album) => ({
+        url: "photos",
+        params: {
+          albumId: album.id,
+        },
+        method: "GET",
+      }),
+
       providesTags: (result, error, album) => {
         if (!result) return [];
         console.log("results in getPhotos", result);
@@ -37,10 +44,20 @@ export const photosApi = createApi({
         { type: "Photos", id: photo.id },
       ],
     }),
+    removePhoto: builder.mutation({
+      query: (photo) => ({
+        url: `photos/${photo.id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: (result, error, photo) => [
+        { type: "Photos", id: photo.id },
+      ],
+    }),
   }),
 });
 
 export const {
   useGetPhotosByAlbumIdQuery,
   useAddPhotoMutation,
+  useRemovePhotoMutation,
 } = photosApi;

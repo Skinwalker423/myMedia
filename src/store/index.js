@@ -12,6 +12,7 @@ import {
   useGetPhotosByAlbumIdQuery,
   photosApi,
   useAddPhotoMutation,
+  useRemovePhotoMutation,
 } from "./apis/photosApi";
 
 export const store = configureStore({
@@ -40,4 +41,8 @@ export {
   useRemoveAlbumByIdMutation,
 };
 
-export { useGetPhotosByAlbumIdQuery, useAddPhotoMutation };
+export {
+  useGetPhotosByAlbumIdQuery,
+  useAddPhotoMutation,
+  useRemovePhotoMutation,
+};

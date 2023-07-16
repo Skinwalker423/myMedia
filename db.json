@@ -127,11 +127,6 @@
       "albumId": 1
     },
     {
-      "id": 2,
-      "url": "/vite.svg",
-      "albumId": 1
-    },
-    {
       "id": 3,
       "url": "/vite.svg",
       "albumId": 2
@@ -190,6 +185,11 @@
       "albumId": 25,
       "url": "https://loremflickr.com/640/480?lock=6954076445081600",
       "id": 14
+    },
+    {
+      "albumId": 1,
+      "url": "https://loremflickr.com/640/480?lock=5704446491230208",
+      "id": 15
     }
   ]
 }

@@ -10,7 +10,7 @@ import { faker } from "@faker-js/faker";
 import PhotosListItem from "./PhotosListItem";
 
 const PhotosList = ({ album }) => {
-  const { data, isLoading, error } =
+  const { data, isLoading, error, isFetching } =
     useGetPhotosByAlbumIdQuery(album);
 
   const [addPhoto, results] = useAddPhotoMutation();
@@ -41,7 +41,7 @@ const PhotosList = ({ album }) => {
           Add Photo
         </Button>
       </div>
-      {isLoading ? (
+      {isFetching ? (
         <Skeleton className={"h-10 w-full"} times={2} />
       ) : (
         <div className='flex flex-wrap w-full gap-5'>
