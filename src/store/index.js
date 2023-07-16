@@ -8,8 +8,11 @@ import {
   useAddAlbumToUserMutation,
   useRemoveAlbumByIdMutation,
 } from "./apis/albumsApi";
-import { useGetPhotosByAlbumIdQuery } from "./apis/photosApi";
-import { photosApi } from "./apis/photosApi";
+import {
+  useGetPhotosByAlbumIdQuery,
+  photosApi,
+  useAddPhotoMutation,
+} from "./apis/photosApi";
 
 export const store = configureStore({
   reducer: {
@@ -37,4 +40,4 @@ export {
   useRemoveAlbumByIdMutation,
 };
 
-export { useGetPhotosByAlbumIdQuery };
+export { useGetPhotosByAlbumIdQuery, useAddPhotoMutation };

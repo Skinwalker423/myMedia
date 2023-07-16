@@ -145,6 +145,16 @@
       "id": 5,
       "url": "/vite.svg",
       "albumId": 2
+    },
+    {
+      "albumId": 25,
+      "url": "https://picsum.photos/seed/1ysAf8DA/640/480",
+      "id": 6
+    },
+    {
+      "albumId": 25,
+      "url": "https://picsum.photos/seed/C6umcf5g/640/480",
+      "id": 7
     }
   ]
 }

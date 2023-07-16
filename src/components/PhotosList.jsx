@@ -1,15 +1,27 @@
 import React from "react";
-import { useGetPhotosByAlbumIdQuery } from "../store";
+import {
+  useGetPhotosByAlbumIdQuery,
+  useAddPhotoMutation,
+} from "../store";
 import Button from "./Button";
 import Skeleton from "./skeleton";
 import { GoTrash } from "react-icons/go";
+import { faker } from "@faker-js/faker";
 
 const PhotosList = ({ album }) => {
   const { data, isLoading, error } =
     useGetPhotosByAlbumIdQuery(album);
 
+  const [addPhoto, results] = useAddPhotoMutation();
+
   const handleAddPhoto = () => {
     console.log("adding photo");
+    const randomImage = faker.image.url();
+    const photo = {
+      albumId: album.id,
+      url: randomImage,
+    };
+    addPhoto(photo);
   };
   const handleDeletePhoto = () => {
     console.log("deleting photo");
@@ -28,8 +40,8 @@ const PhotosList = ({ album }) => {
         </div>
         <img
           className='min-w-2xl'
-          width={500}
-          height={500}
+          width={300}
+          height={300}
           src={photo.url}
           alt={`photo ${photo.id} in ${album.title}`}
         />
@@ -42,6 +54,7 @@ const PhotosList = ({ album }) => {
       <div className='flex justify-between items-center mb-5'>
         <div>Photos for {album.title}</div>
         <Button
+          isLoading={results.isLoading}
           className='min-w-2xl'
           onClick={handleAddPhoto}
         >

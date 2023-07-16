@@ -12,7 +12,20 @@ export const photosApi = createApi({
     getPhotosByAlbumId: builder.query({
       query: (album) => `photos?albumId=${album.id}`,
     }),
+    addPhoto: builder.mutation({
+      query: (photo) => ({
+        url: "photos",
+        method: "POST",
+        body: {
+          albumId: photo.albumId,
+          url: photo.url,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetPhotosByAlbumIdQuery } = photosApi;
+export const {
+  useGetPhotosByAlbumIdQuery,
+  useAddPhotoMutation,
+} = photosApi;
