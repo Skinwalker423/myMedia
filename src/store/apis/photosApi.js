@@ -41,7 +41,7 @@ export const photosApi = createApi({
         },
       }),
       invalidatesTags: (result, error, photo) => [
-        { type: "Photos", id: photo.id },
+        { type: "PhotosAlbum", id: photo.albumId },
       ],
     }),
     removePhoto: builder.mutation({
