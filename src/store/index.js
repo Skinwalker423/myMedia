@@ -9,15 +9,20 @@ import {
   useRemoveAlbumByIdMutation,
 } from "./apis/albumsApi";
 import { useGetPhotosByAlbumIdQuery } from "./apis/photosApi";
+import { photosApi } from "./apis/photosApi";
 
 export const store = configureStore({
   reducer: {
     users: userReducer,
     albums: albumsReducer,
     [albumsApi.reducerPath]: albumsApi.reducer,
+    [photosApi.reducerPath]: photosApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(albumsApi.middleware),
+    getDefaultMiddleware().concat([
+      albumsApi.middleware,
+      photosApi.middleware,
+    ]),
 });
 
 setupListeners(store.dispatch);
