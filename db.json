@@ -125,6 +125,26 @@
       "id": 1,
       "url": "/vite.svg",
       "albumId": 1
+    },
+    {
+      "id": 2,
+      "url": "/vite.svg",
+      "albumId": 1
+    },
+    {
+      "id": 3,
+      "url": "/vite.svg",
+      "albumId": 2
+    },
+    {
+      "id": 4,
+      "url": "/vite.svg",
+      "albumId": 2
+    },
+    {
+      "id": 5,
+      "url": "/vite.svg",
+      "albumId": 2
     }
   ]
 }

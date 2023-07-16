@@ -11,18 +11,28 @@ const PhotosList = ({ album }) => {
   const handleAddPhoto = () => {
     console.log("adding photo");
   };
+  const handleDeletePhoto = () => {
+    console.log("deleting photo");
+  };
 
   const renderedList = data?.map((photo) => {
     return (
       <div
         key={photo.id}
-        className='flex flex-col justify-center items-center'
+        className='flex flex-col justify-between items-center border py-2 px-3 shadow-sm'
       >
+        <div className='w-full flex justify-end items-center'>
+          <Button onClick={handleDeletePhoto}>
+            <GoTrash />
+          </Button>
+        </div>
         <img
+          className='min-w-2xl'
+          width={500}
+          height={500}
           src={photo.url}
           alt={`photo ${photo.id} in ${album.title}`}
         />
-        <Button>Delete</Button>
       </div>
     );
   });
@@ -35,13 +45,15 @@ const PhotosList = ({ album }) => {
           className='min-w-2xl'
           onClick={handleAddPhoto}
         >
-          Add Album
+          Add Photo
         </Button>
       </div>
       {isLoading ? (
         <Skeleton className={"h-10 w-full"} times={2} />
       ) : (
-        renderedList
+        <div className='flex flex-wrap w-full gap-5'>
+          {renderedList}
+        </div>
       )}
 
       {error && "Problem fetching albums"}
