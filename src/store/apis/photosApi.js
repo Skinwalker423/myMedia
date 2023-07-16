@@ -11,6 +11,18 @@ export const photosApi = createApi({
   endpoints: (builder) => ({
     getPhotosByAlbumId: builder.query({
       query: (album) => `photos?albumId=${album.id}`,
+      providesTags: (result, error, album) => {
+        if (!result) return [];
+        console.log("results in getPhotos", result);
+        const tags = result.map((photo) => {
+          return {
+            type: "Photos",
+            id: photo.id,
+          };
+        });
+        tags.push({ type: "PhotosAlbum", id: album.id });
+        return tags;
+      },
     }),
     addPhoto: builder.mutation({
       query: (photo) => ({
@@ -21,6 +33,9 @@ export const photosApi = createApi({
           url: photo.url,
         },
       }),
+      invalidatesTags: (result, error, photo) => [
+        { type: "Photos", id: photo.id },
+      ],
     }),
   }),
 });
