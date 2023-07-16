@@ -7,6 +7,7 @@ import Button from "./Button";
 import Skeleton from "./skeleton";
 import { GoTrash } from "react-icons/go";
 import { faker } from "@faker-js/faker";
+import PhotosListItem from "./PhotosListItem";
 
 const PhotosList = ({ album }) => {
   const { data, isLoading, error } =
@@ -23,30 +24,9 @@ const PhotosList = ({ album }) => {
     };
     addPhoto(photo);
   };
-  const handleDeletePhoto = () => {
-    console.log("deleting photo");
-  };
 
   const renderedList = data?.map((photo) => {
-    return (
-      <div
-        key={photo.id}
-        className='flex flex-col justify-between items-center border py-2 px-3 shadow-sm'
-      >
-        <div className='w-full flex justify-end items-center'>
-          <Button onClick={handleDeletePhoto}>
-            <GoTrash />
-          </Button>
-        </div>
-        <img
-          className='min-w-2xl'
-          width={300}
-          height={300}
-          src={photo.url}
-          alt={`photo ${photo.id} in ${album.title}`}
-        />
-      </div>
-    );
+    return <PhotosListItem key={photo.id} photo={photo} />;
   });
 
   return (
